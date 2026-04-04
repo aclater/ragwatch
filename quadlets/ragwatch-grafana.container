@@ -1,0 +1,27 @@
+[Unit]
+Description=ragwatch Grafana dashboard
+After=network-online.target ragwatch.service
+
+[Container]
+# Stub — Grafana image to be pinned when selected
+Image=grafana/grafana:11.4.0
+ContainerName=ragwatch-grafana
+
+# Persistent dashboard and datasource config
+Volume=%h/.config/ragwatch/grafana:/var/lib/grafana:Z
+
+# Environment from shared config
+EnvironmentFile=%h/.config/llm-stack/env
+
+# Run as non-root (Grafana default)
+User=472
+
+# Networking — needs access to ragwatch Prometheus endpoint
+Network=host
+
+[Service]
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

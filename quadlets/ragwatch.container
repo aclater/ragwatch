@@ -1,0 +1,26 @@
+[Unit]
+Description=ragwatch — observability service for rag-suite (Prometheus + Grafana)
+After=network-online.target
+
+[Container]
+Image=localhost/ragwatch:latest
+ContainerName=ragwatch
+
+# Mount app code for dev workflow
+Volume=%h/git/ragwatch:/app:ro,Z
+
+# Environment from shared config
+EnvironmentFile=%h/.config/llm-stack/env
+
+# Run as non-root
+User=1001
+
+# Networking — needs access to ragpipe, ragstuffer, ragprobe metrics endpoints
+Network=host
+
+[Service]
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target
