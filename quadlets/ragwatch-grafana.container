@@ -1,27 +1,38 @@
 [Unit]
 Description=ragwatch Grafana dashboard
 After=network-online.target ragwatch.service
+Wants=ragwatch.service
 
 [Container]
-# Stub — Grafana image to be pinned when selected
 Image=grafana/grafana:12.4.2
 ContainerName=ragwatch-grafana
 
 # Persistent dashboard and datasource config
 Volume=%h/.config/ragwatch/grafana:/var/lib/grafana:Z
+# Prometheus datasource provisioning (auto-configured on first start)
+Volume=%h/.config/ragwatch/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro,Z
+# Dashboard JSON provisioning
+Volume=%h/.config/ragwatch/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro,Z
 
 # Environment from shared config
 EnvironmentFile=%h/.config/llm-stack/env
 
-# Run as non-root (Grafana default)
+# Run as non-root (Grafana default UID 472)
 User=472
 
 # Networking — needs access to ragwatch Prometheus endpoint
 Network=host
 
+# Health check — Grafana serves /api/health
+HealthCmd=curl -sf http://127.0.0.1:3000/api/health
+HealthInterval=30s
+HealthTimeout=5s
+HealthRetries=3
+HealthStartPeriod=60s
+
 [Service]
 Restart=on-failure
-RestartSec=30
+RestartSec=30s
 
 [Install]
 WantedBy=default.target

@@ -1,6 +1,7 @@
 [Unit]
-Description=ragwatch — observability service for rag-suite (Prometheus + Grafana)
-After=network-online.target
+Description=ragwatch — observability aggregation service for rag-suite
+After=network-online.target ragpipe.service ragstuffer.service
+Wants=network-online.target
 
 [Container]
 Image=localhost/ragwatch:latest
@@ -15,12 +16,19 @@ EnvironmentFile=%h/.config/llm-stack/env
 # Run as non-root
 User=1001
 
-# Networking — needs access to ragpipe, ragstuffer, ragprobe metrics endpoints
+# Networking — needs access to ragpipe and ragstuffer metrics endpoints
 Network=host
+
+# Health check
+HealthCmd=curl -sf http://127.0.0.1:9090/health
+HealthInterval=30s
+HealthTimeout=5s
+HealthRetries=3
+HealthStartPeriod=10s
 
 [Service]
 Restart=on-failure
-RestartSec=30
+RestartSec=30s
 
 [Install]
 WantedBy=default.target
