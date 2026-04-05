@@ -4,7 +4,7 @@ After=network-online.target ragwatch.service
 
 [Container]
 # Stub — Grafana image to be pinned when selected
-Image=grafana/grafana:11.4.0
+Image=grafana/grafana:12.4.2
 ContainerName=ragwatch-grafana
 
 # Persistent dashboard and datasource config
