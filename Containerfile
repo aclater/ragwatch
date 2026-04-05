@@ -9,7 +9,8 @@ RUN dnf install -y -q python3 python3-pip curl && \
 
 WORKDIR /app
 
-COPY pyproject.toml ragwatch/ ./
+COPY pyproject.toml ./
+COPY ragwatch/ ragwatch/
 RUN pip install --quiet --no-cache-dir .
 
 USER 1001
