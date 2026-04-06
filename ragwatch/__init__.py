@@ -29,10 +29,11 @@ log = logging.getLogger("ragwatch")
 
 RAGPIPE_METRICS_URL = "http://localhost:8090/metrics"
 RAGSTUFFER_METRICS_URL = "http://localhost:8091/metrics"
+RAGORCHESTRATOR_METRICS_URL = "http://localhost:8095/metrics"
 SCRAPE_INTERVAL = int(__import__("os").environ.get("RAGWATCH_SCRAPE_INTERVAL_SECS", "30"))
 
 _scrape_lock = threading.Lock()
-_latest: dict[str, dict[str, float]] = {"ragpipe": {}, "ragstuffer": {}}
+_latest: dict[str, dict[str, float]] = {"ragpipe": {}, "ragstuffer": {}, "ragorchestrator": {}}
 _all_upstream_up = True
 
 
@@ -78,9 +79,10 @@ def _scrape_loop() -> None:
     while True:
         pipe_samples = _scrape_source("ragpipe", RAGPIPE_METRICS_URL)
         stuffer_samples = _scrape_source("ragstuffer", RAGSTUFFER_METRICS_URL)
-        all_up = bool(pipe_samples) and bool(stuffer_samples)
+        orch_samples = _scrape_source("ragorchestrator", RAGORCHESTRATOR_METRICS_URL)
+        all_up = bool(pipe_samples) and bool(stuffer_samples) and bool(orch_samples)
         with _scrape_lock:
-            _latest = {"ragpipe": pipe_samples, "ragstuffer": stuffer_samples}
+            _latest = {"ragpipe": pipe_samples, "ragstuffer": stuffer_samples, "ragorchestrator": orch_samples}
             _all_upstream_up = all_up
         ragwatch_up.set(1 if all_up else 0)
         time.sleep(SCRAPE_INTERVAL)
@@ -90,7 +92,7 @@ def _scrape_loop() -> None:
 async def lifespan(app: FastAPI):
     thread = threading.Thread(target=_scrape_loop, daemon=True)
     thread.start()
-    log.info("ragwatch started — scraping ragpipe and ragstuffer every %ds", SCRAPE_INTERVAL)
+    log.info("ragwatch started — scraping ragpipe, ragstuffer, and ragorchestrator every %ds", SCRAPE_INTERVAL)
     yield
     log.info("ragwatch shutting down")
 
@@ -108,6 +110,7 @@ async def metrics_summary():
     with _scrape_lock:
         pipe = dict(_latest["ragpipe"])
         stuffer = dict(_latest["ragstuffer"])
+        orch = dict(_latest["ragorchestrator"])
         all_up = _all_upstream_up
 
     summary: dict[str, object] = {
@@ -116,6 +119,7 @@ async def metrics_summary():
         "sources": {
             "ragpipe": {"up": bool(pipe), "metric_count": len(pipe)},
             "ragstuffer": {"up": bool(stuffer), "metric_count": len(stuffer)},
+            "ragorchestrator": {"up": bool(orch), "metric_count": len(orch)},
         },
     }
 
@@ -139,6 +143,14 @@ async def metrics_summary():
             "chunks_created_total": stuffer.get("ragstuffer_chunks_created_total", 0.0),
             "embed_requests_total": stuffer.get("ragstuffer_embed_requests_total", 0.0),
             "embed_errors_total": stuffer.get("ragstuffer_embed_errors_total", 0.0),
+        }
+
+    if orch:
+        summary["ragorchestrator"] = {
+            "queries_total": orch.get("ragorchestrator_queries_total", 0.0),
+            "query_latency_seconds": orch.get("ragorchestrator_query_latency_seconds", 0.0),
+            "tool_calls_total": orch.get("ragorchestrator_tool_calls_total", 0.0),
+            "complexity_classified_total": orch.get("ragorchestrator_complexity_classified_total", 0.0),
         }
 
     return JSONResponse(summary)
