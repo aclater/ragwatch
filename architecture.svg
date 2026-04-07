@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 560" font-family="system-ui, -apple-system, sans-serif" font-size="13">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1a1a2e; }
+      .box { fill: #16213e; stroke: #e2e8f0; }
+      .box-highlight { fill: #1a365d; stroke: #63b3ed; }
+      .box-external { fill: #1c1c1c; stroke: #718096; }
+      .box-future { fill: #1c1c1c; stroke: #718096; stroke-dasharray: 6,3; }
+      .text { fill: #e2e8f0; }
+      .text-dim { fill: #a0aec0; }
+      .text-accent { fill: #63b3ed; }
+      .text-green { fill: #68d391; }
+      .text-warn { fill: #f6ad55; }
+      .arrow { stroke: #63b3ed; fill: #63b3ed; }
+      .arrow-dim { stroke: #718096; fill: #718096; }
+      .arrow-future { stroke: #718096; fill: #718096; }
+      .label-bg { fill: #2d3748; }
+      .store-bg { fill: #2d3748; stroke: #68d391; stroke-dasharray: 4,2; }
+    }
+    @media (prefers-color-scheme: light) {
+      .bg { fill: #ffffff; }
+      .box { fill: #f7fafc; stroke: #2d3748; }
+      .box-highlight { fill: #ebf8ff; stroke: #3182ce; }
+      .box-external { fill: #f9f9f9; stroke: #a0aec0; }
+      .box-future { fill: #f9f9f9; stroke: #a0aec0; stroke-dasharray: 6,3; }
+      .text { fill: #1a202c; }
+      .text-dim { fill: #718096; }
+      .text-accent { fill: #2b6cb0; }
+      .text-green { fill: #276749; }
+      .text-warn { fill: #c05621; }
+      .arrow { stroke: #3182ce; fill: #3182ce; }
+      .arrow-dim { stroke: #a0aec0; fill: #a0aec0; }
+      .arrow-future { stroke: #a0aec0; fill: #a0aec0; }
+      .label-bg { fill: #edf2f7; }
+      .store-bg { fill: #f0fff4; stroke: #38a169; stroke-dasharray: 4,2; }
+    }
+  </style>
+  <defs>
+    <marker id="ah" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" class="arrow"/>
+    </marker>
+    <marker id="ahd" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" class="arrow-dim"/>
+    </marker>
+    <marker id="ahf" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" class="arrow-future"/>
+    </marker>
+  </defs>
+
+  <rect width="820" height="560" class="bg" rx="8"/>
+
+  <!-- Title -->
+  <text x="410" y="30" text-anchor="middle" font-size="18" font-weight="bold" class="text">ragwatch — metrics aggregation</text>
+  <text x="410" y="48" text-anchor="middle" font-size="11" class="text-dim">Scrape, aggregate, and expose rag-suite observability data</text>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SCRAPE TARGETS (left column) -->
+  <text x="30" y="82" font-size="12" font-weight="600" class="text-dim">Scrape targets (30s interval)</text>
+
+  <!-- ragpipe -->
+  <rect x="30" y="92" width="200" height="44" rx="5" class="box-external"/>
+  <text x="130" y="112" text-anchor="middle" font-weight="600" font-size="12" class="text">ragpipe</text>
+  <text x="130" y="128" text-anchor="middle" font-size="10" class="text-dim">:8090/metrics</text>
+
+  <!-- ragstuffer -->
+  <rect x="30" y="148" width="200" height="44" rx="5" class="box-external"/>
+  <text x="130" y="168" text-anchor="middle" font-weight="600" font-size="12" class="text">ragstuffer</text>
+  <text x="130" y="184" text-anchor="middle" font-size="10" class="text-dim">:8091/metrics</text>
+
+  <!-- ragorchestrator -->
+  <rect x="30" y="204" width="200" height="44" rx="5" class="box-external"/>
+  <text x="130" y="224" text-anchor="middle" font-weight="600" font-size="12" class="text">ragorchestrator</text>
+  <text x="130" y="240" text-anchor="middle" font-size="10" class="text-dim">:8095/metrics</text>
+
+  <!-- Future targets (dotted) -->
+  <rect x="30" y="264" width="200" height="44" rx="5" class="box-future"/>
+  <text x="130" y="284" text-anchor="middle" font-weight="600" font-size="12" class="text-dim">ragdeck, ragstuffer-mpep</text>
+  <text x="130" y="300" text-anchor="middle" font-size="10" class="text-dim">:8092, :8093 (planned)</text>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- RAGWATCH BOX (center) -->
+  <rect x="290" y="72" width="240" height="310" rx="8" class="box-highlight" stroke-width="2" fill-opacity="0.3"/>
+  <text x="410" y="96" text-anchor="middle" font-size="15" font-weight="bold" class="text-accent">ragwatch :9090</text>
+
+  <!-- Background scrape thread -->
+  <rect x="310" y="110" width="200" height="36" rx="5" class="box"/>
+  <text x="410" y="127" text-anchor="middle" font-weight="600" font-size="11" class="text">Background scrape thread</text>
+  <text x="410" y="140" text-anchor="middle" font-size="9" class="text-dim">daemon thread, httpx client</text>
+
+  <!-- In-memory store -->
+  <rect x="310" y="158" width="200" height="36" rx="5" class="store-bg"/>
+  <text x="410" y="175" text-anchor="middle" font-weight="600" font-size="11" class="text">In-memory sample store</text>
+  <text x="410" y="188" text-anchor="middle" font-size="9" class="text-green">thread-safe dict + lock</text>
+
+  <!-- Arrow: scrape thread → store -->
+  <line x1="410" y1="146" x2="410" y2="158" class="arrow" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- Metric parser -->
+  <rect x="310" y="206" width="200" height="30" rx="5" class="box"/>
+  <text x="410" y="225" text-anchor="middle" font-size="10" class="text-dim">Parse Prometheus text format</text>
+
+  <!-- Arrow: store ↔ parser -->
+  <line x1="410" y1="194" x2="410" y2="206" class="arrow" stroke-width="1" marker-end="url(#ah)"/>
+
+  <!-- Endpoints -->
+  <text x="310" y="258" font-size="11" font-weight="600" class="text-accent">Endpoints</text>
+
+  <rect x="310" y="266" width="200" height="20" rx="3" class="box"/>
+  <text x="320" y="280" font-size="10" font-weight="600" class="text">GET /health</text>
+  <text x="505" y="280" font-size="9" class="text-dim" text-anchor="end">ok | degraded</text>
+
+  <rect x="310" y="292" width="200" height="20" rx="3" class="box"/>
+  <text x="320" y="306" font-size="10" font-weight="600" class="text">GET /metrics</text>
+  <text x="505" y="306" font-size="9" class="text-dim" text-anchor="end">Prometheus format</text>
+
+  <rect x="310" y="318" width="200" height="20" rx="3" class="box"/>
+  <text x="320" y="332" font-size="10" font-weight="600" class="text">GET /metrics/summary</text>
+  <text x="505" y="332" font-size="9" class="text-dim" text-anchor="end">JSON aggregate</text>
+
+  <!-- Own metrics label -->
+  <rect x="310" y="348" width="200" height="28" rx="3" class="label-bg"/>
+  <text x="410" y="360" text-anchor="middle" font-size="9" class="text-dim">ragwatch_scrape_duration_seconds</text>
+  <text x="410" y="372" text-anchor="middle" font-size="9" class="text-dim">ragwatch_scrape_errors_total · ragwatch_up</text>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Arrows: scrape targets → ragwatch -->
+  <line x1="230" y1="114" x2="290" y2="128" class="arrow" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="230" y1="170" x2="290" y2="128" class="arrow" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="230" y1="226" x2="290" y2="128" class="arrow" stroke-width="1.5" marker-end="url(#ah)"/>
+
+  <!-- Dotted arrow: future targets → ragwatch -->
+  <line x1="230" y1="286" x2="290" y2="140" class="arrow-future" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ahf)"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- DOWNSTREAM CONSUMERS (right column) -->
+  <text x="590" y="82" font-size="12" font-weight="600" class="text-dim">Downstream consumers</text>
+
+  <!-- ragdeck -->
+  <rect x="590" y="92" width="200" height="56" rx="5" class="box-external"/>
+  <text x="690" y="112" text-anchor="middle" font-weight="600" font-size="12" class="text">ragdeck</text>
+  <text x="690" y="128" text-anchor="middle" font-size="10" class="text-dim">:8092 — admin dashboard</text>
+  <text x="690" y="142" text-anchor="middle" font-size="9" class="text-accent">polls /metrics/summary</text>
+
+  <!-- Prometheus (optional) -->
+  <rect x="590" y="162" width="200" height="56" rx="5" class="box-external"/>
+  <text x="690" y="182" text-anchor="middle" font-weight="600" font-size="12" class="text">Prometheus</text>
+  <text x="690" y="198" text-anchor="middle" font-size="10" class="text-dim">external (optional)</text>
+  <text x="690" y="212" text-anchor="middle" font-size="9" class="text-accent">scrapes /metrics</text>
+
+  <!-- Future: alerting -->
+  <rect x="590" y="234" width="200" height="44" rx="5" class="box-future"/>
+  <text x="690" y="254" text-anchor="middle" font-weight="600" font-size="12" class="text-dim">Alerting / Webhooks</text>
+  <text x="690" y="270" text-anchor="middle" font-size="10" class="text-dim">(planned)</text>
+
+  <!-- Arrows: ragwatch → downstream -->
+  <line x1="530" y1="328" x2="590" y2="120" class="arrow" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="530" y1="302" x2="590" y2="190" class="arrow-dim" stroke-width="1.5" marker-end="url(#ahd)"/>
+
+  <!-- Dotted arrow: ragwatch → alerting -->
+  <line x1="530" y1="340" x2="590" y2="256" class="arrow-future" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ahf)"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Aggregated metrics detail (bottom) -->
+  <rect x="30" y="400" width="760" height="100" rx="6" class="label-bg"/>
+  <text x="410" y="420" text-anchor="middle" font-size="12" font-weight="600" class="text">Aggregated metrics per source</text>
+
+  <text x="60" y="444" font-size="11" font-weight="600" class="text-accent">ragpipe</text>
+  <text x="60" y="458" font-size="10" class="text-dim">queries_total, embed_cache_hits/misses,</text>
+  <text x="60" y="472" font-size="10" class="text-dim">invalid_citations_total, chunks_retrieved_total</text>
+
+  <text x="310" y="444" font-size="11" font-weight="600" class="text-accent">ragstuffer</text>
+  <text x="310" y="458" font-size="10" class="text-dim">documents_ingested_total, chunks_created_total,</text>
+  <text x="310" y="472" font-size="10" class="text-dim">embed_requests_total, embed_errors_total</text>
+
+  <text x="570" y="444" font-size="11" font-weight="600" class="text-accent">ragorchestrator</text>
+  <text x="570" y="458" font-size="10" class="text-dim">queries_total, query_latency_seconds,</text>
+  <text x="570" y="472" font-size="10" class="text-dim">tool_calls_total, complexity_classified_total</text>
+
+  <!-- Separator lines -->
+  <line x1="290" y1="432" x2="290" y2="488" stroke-width="1" class="arrow-dim" stroke-dasharray="2,2"/>
+  <line x1="550" y1="432" x2="550" y2="488" stroke-width="1" class="arrow-dim" stroke-dasharray="2,2"/>
+
+  <!-- Legend -->
+  <text x="30" y="530" font-size="10" class="text-dim">
+    <tspan font-weight="600">Legend:</tspan>
+    <tspan dx="8">solid = current</tspan>
+    <tspan dx="16">dashed = planned</tspan>
+  </text>
+
+  <!-- Footer -->
+  <text x="410" y="550" text-anchor="middle" font-size="10" class="text-dim">github.com/aclater/ragwatch -- AGPL-3.0</text>
+</svg>
