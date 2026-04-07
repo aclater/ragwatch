@@ -1,18 +1,20 @@
 # Architecture
 
-Observability aggregation service for the rag-suite stack. Scrapes metrics from ragpipe and ragstuffer, stores parsed samples in memory, and exposes them via Prometheus-compatible `/metrics` endpoint and JSON `/metrics/summary` endpoint for Grafana dashboards.
+Observability aggregation service for the rag-suite stack. Scrapes metrics from ragpipe, ragstuffer, and ragorchestrator, stores parsed samples in memory, and exposes them via Prometheus-compatible `/metrics` endpoint and JSON `/metrics/summary` endpoint for Grafana dashboards.
 
 ## How it fits into rag-suite
 
 ```
 ragpipe ──→ :8090/metrics ──┐
-                           ├──→ ragwatch (:9090) ──→ Prometheus server
-ragstuffer ──→ :8091/metrics ┤
+                           │
+ragstuffer ──→ :8091/metrics ├──→ ragwatch (:9090) ──→ Prometheus server
+                           │
+ragorchestrator ──→ :8095/metrics ┤
                            │
                            └──→ /metrics/summary JSON → Grafana dashboards
 ```
 
-Background thread scrapes both endpoints every 30 seconds (configurable via `RAGWATCH_SCRAPE_INTERVAL_SECS`).
+Background thread scrapes all three services every 30 seconds (configurable via `RAGWATCH_SCRAPE_INTERVAL_SECS`).
 
 ## Scraped services
 
