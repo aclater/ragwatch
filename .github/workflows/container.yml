@@ -87,7 +87,7 @@ jobs:
           push-to-registry: true
 
       - name: Upload SBOM artifact
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: sbom-${{ github.run_id }}
           path: sbom.spdx.json
