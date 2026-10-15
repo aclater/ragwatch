@@ -1,3 +1,5 @@
+> **Archived on 2026-10-15.** This repo is part of the original RAG suite (April 2026) and is no longer maintained. It has been superseded by a rebuild: **[aclater/rag](https://github.com/aclater/rag)**.
+
 # ragwatch
 
 Observability aggregation service for the rag-suite stack. Scrapes metrics from ragpipe, ragstuffer, and ragorchestrator, stores parsed samples in memory, and exposes them via Prometheus-compatible `/metrics` endpoint and JSON `/metrics/summary` endpoint for Grafana dashboards.
